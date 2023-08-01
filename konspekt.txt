@@ -1,0 +1,24 @@
+node js - js work local pc
+npm - download helper
+
+npm init - start project
+cd - change directory
+mkdir - make directory
+../ - directory back
+./ - this directory
+folder = directory 
+fs
+async 
+await 
+b 
+i 
+s 
+a 
+
+ {
+  name: 'egor'
+}
+2 type tg keyboard
+npm i express
+const
+set command with botfather
