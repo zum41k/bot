@@ -83,7 +83,7 @@ const textToSpeech = async (text, lang = 'en', speed = 0.5) => {
 let keyboard = {
   reply_markup: {
     inline_keyboard: [
-      [ {text: 'hello', callback_data: 'hello'}, {text: 'good buy', callback_data: 'good buy'} ]
+      [ {text: 'hello2', callback_data: 'hello'}, {text: 'good buy', callback_data: 'good buy'} ]
     ]
   }
 }
