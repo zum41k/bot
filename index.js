@@ -10,7 +10,8 @@ const currentModuleUrl = import.meta.url;
 const currentFilePath = fileURLToPath(currentModuleUrl);
 const currentDir = dirname(currentFilePath);
 
-
+let lang ='en' 
+let counter = 0
 // Функция для преобразования текста в речь
 const textToSpeech = async (text, lang = 'en', speed = 0.5) => {
     const url = googleTTS.getAudioUrl(text, {
@@ -83,14 +84,27 @@ const textToSpeech = async (text, lang = 'en', speed = 0.5) => {
 let keyboard = {
   reply_markup: {
     inline_keyboard: [
-      [ {text: 'hello2', callback_data: 'hello'}, {text: 'good buy', callback_data: 'good buy'} ]
+      [ {text: 'отримати доступ', callback_data: 'access'}]
+    ]
+  }
+}
+
+let keyboardLang = {
+  reply_markup: {
+    inline_keyboard: [
+      [ {text: 'UA🇺🇦', callback_data: 'lang-UA'}],
+      [ {text: 'EN🏴󠁧󠁢󠁥󠁮󠁧󠁿', callback_data: 'lang-EN'}],
+      [ {text: 'FR🇫🇷', callback_data: 'lang-FR'}]
+
     ]
   }
 }
 
 
 
-
+// git add .
+// git commit -m "first commit"
+// git push -u origin main
 
 
 
@@ -108,7 +122,7 @@ bot.on('message', async function (message) {
 
     if (message.text == '/start') {
       await bot.sendPhoto(message.chat.id, 'img/завантаження.jpg', {caption: 'Відправте ваш текст і я переведу його в голос'}) 
-      await bot.sendMessage(message.chat.id, '<b>Welcome</b> <i>Your bot is process creating</i> Input your text and bot convert to voice:', {parse_mode: 'HTML'})
+      await bot.sendMessage(message.chat.id, '<b>Welcome</b> <i>Your bot is process creating</i> Input your text and bot convert to voice:', {...keyboardLang,parse_mode: 'HTML'})
     }
     else if (message.text == '/info'){
       await bot.sendMessage(message.chat.id, '<u>underline</u><a href="https://google.com"> link to google</a>', {parse_mode: 'HTML'})
@@ -120,9 +134,11 @@ bot.on('message', async function (message) {
 
     else {
         bot.sendMessage(message.chat.id, 'hi')
+        if (counter < 3){
+
           // Пример использования
         const text = message.text;
-        const lang = 'en';
+       
         const speed = 1;
         
         const speechUrl = await textToSpeech(text, lang, speed);
@@ -135,6 +151,13 @@ bot.on('message', async function (message) {
                 bot.sendAudio(message.chat.id, 'output.mp3')
     })
             .catch((error) => console.error(error.message));
+
+            counter++
+            
+  }
+  else {
+    bot.sendMessage(message.chat.id, 'вибачаюсь але ви викоростали усі безкоштовні спроби далі 2 гривні один переклад', keyboard)
+  }        
         
     }
 
@@ -171,6 +194,16 @@ bot.on('message', async function (message) {
 
   })
     
+
+  bot.on('callback_query', (message) => {
+    if (message.data == 'access') {
+      bot.sendMessage(message.message.chat.id, 'is activate')
+    }
+    if (message.data == 'lang-UA') {
+       lang = 'ua'; 
+      bot.sendMessage(message.message.chat.id, 'Вімкнена Україньська мова')
+    }
+  })
 
 bot.on('photo', function (message) {
     bot.sendPhoto(message.chat.id, '1.jpg')
